@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Brawl Tracker</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101116;color:#f5f5f7;font-family:Arial,sans-serif;padding:22px 16px}
+main{max-width:650px;margin:auto}
+header{display:flex;justify-content:space-between;align-items:center;margin-bottom:35px}
+.logo{font-size:21px;font-weight:900;letter-spacing:1px}
+.logo span{color:#ffd34e}
+.status{font-size:11px;color:#77e0a1}
+h1{font-size:32px;margin:0 0 8px}
+.sub{color:#999cac;font-size:13px;margin-bottom:25px}
+.card{background:#1b1d27;border:1px solid #303341;border-radius:18px;padding:19px;margin-bottom:14px}
+.label{font-size:11px;color:#999cac;letter-spacing:1.4px;font-weight:bold}
+input{width:100%;padding:15px;border-radius:11px;border:1px solid #383b49;background:#11131a;color:white;font-size:16px;margin:12px 0}
+button{background:#ffd34e;border:0;border-radius:11px;padding:14px;font-weight:bold;font-size:14px;width:100%;cursor:pointer}
+button:active{opacity:.8}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+.stat{background:#1b1d27;padding:17px;border-radius:15px;border:1px solid #303341}
+.stat strong{display:block;font-size:25px;margin-top:8px}
+.stat small{color:#999cac;font-size:11px}
+.trophy{font-size:42px;font-weight:900;margin:12px 0}
+.yellow{color:#ffd34e}
+.muted{color:#999cac;font-size:12px}
+.bar{height:9px;background:#343746;border-radius:20px;margin:12px 0;overflow:hidden}
+.fill{height:100%;width:52.3%;background:#ffd34e}
+.section{font-size:17px;font-weight:bold;margin:25px 2px 12px}
+.brawler{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px solid #303341}
+.brawler:last-child{border:0}
+.hidden{display:none}
+footer{text-align:center;color:#666b7b;font-size:11px;margin:30px 0}
+</style>
+</head>
+<body>
+<main>
+<header>
+<div class="logo">BRAWL<span>.</span>TRACKER</div>
+<div class="status">● PERSONAL DASHBOARD</div>
+</header>
+
+<h1>Player statistics</h1>
+<p class="sub">Твоя игровая статистика в одном месте.</p>
+
+<section class="card">
+<div class="label">ПОИСК ИГРОКА</div>
+<input id="tag" value="8080QRRVQ" placeholder="Введи тег игрока">
+<button onclick="searchPlayer()">Найти игрока</button>
+<p class="muted" id="message">Демонстрационный профиль. Подключение API впереди.</p>
+</section>
+
+<div id="profile">
+<section class="card">
+<div class="label">PLAYER PROFILE</div>
+<div class="trophy">78 400 <span class="yellow">🏆</span></div>
+<div class="muted">#8080QRRVQ</div>
+<div class="bar"><div class="fill"></div></div>
+<div class="muted">52,3% до цели 150 000</div>
+</section>
+
+<div class="stats">
+<div class="stat"><small>ТРОФЕИ</small><strong>78.4K</strong></div>
+<div class="stat"><small>БОЙЦЫ</small><strong>109</strong></div>
+<div class="stat"><small>НИЖЕ 9 СИЛЫ</small><strong>33</strong></div>
+<div class="stat"><small>ГАДЖЕТЫ</small><strong>100%</strong></div>
+</div>
+
+<div class="section">Прогресс прокачки</div>
+<section class="card">
+<div class="brawler"><span>Сила 7</span><strong>Есть бойцы</strong></div>
+<div class="brawler"><span>Сила 8</span><strong>Есть бойцы</strong></div>
+<div class="brawler"><span>Сила 9+</span><strong>Остальные</strong></div>
+</section>
+
+<div class="section">Последние матчи</div>
+<section class="card">
+<p class="muted">История матчей появится после подключения API.</p>
+</section>
+</div>
+
+<footer>BRAWL TRACKER · UNOFFICIAL FAN PROJECT</footer>
+</main>
+
+<script>
+function searchPlayer(){
+ const tag=document.getElementById('tag').value.trim().replace('#','').toUpperCase();
+ const message=document.getElementById('message');
+ if(!tag){message.textContent='Введи тег игрока.';return;}
+ message.textContent='Тег '+tag+' сохранён. Реальный поиск подключим через Supercell API.';
+}
+</script>
+</body>
+</html>
