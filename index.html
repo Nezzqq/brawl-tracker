@@ -1,91 +1,61 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b0d14">
 <title>Brawl Tracker</title>
 <style>
-:root{
- --bg:#0b0d14;--panel:#151925;--panel2:#1b2030;
- --line:#292f40;--text:#f4f5fb;--muted:#8991a5;
- --purple:#9672ff;--green:#55d69a;--yellow:#ffd36a;
-}
+:root{--bg:#0b0d14;--panel:#151925;--panel2:#10141f;--line:#292f40;--text:#f4f5fb;--muted:#8991a5;--purple:#9672ff;--green:#55d69a;--yellow:#ffd36a}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);
- font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
 button,input,select{font:inherit}
 button{cursor:pointer}
 .app{max-width:1050px;margin:auto;padding:22px 16px 105px}
 header{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}
-.logo{font-size:22px;font-weight:950;letter-spacing:-1px}
-.logo span{color:var(--purple)}
+.logo{font-size:22px;font-weight:950;letter-spacing:-1px}.logo span{color:var(--purple)}
 .status{font-size:11px;color:var(--green)}
-.page{display:none}
-.page.active{display:block}
-.panel{background:var(--panel);border:1px solid var(--line);
- border-radius:18px;padding:17px;margin-bottom:14px}
-h2{font-size:16px;margin:0 0 15px}
-h3{font-size:14px;margin:0}
+.page{display:none}.page.active{display:block}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:17px;margin-bottom:14px}
+h2{font-size:16px;margin:0 0 15px}h3{font-size:14px;margin:0}
 .muted{color:var(--muted);font-size:12px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:12px}
 .hero{padding:22px;background:linear-gradient(130deg,#211c3c,#171a29 65%,#182735)}
-.hero-name{font-size:21px;font-weight:850}
-.hero-trophies{font-size:42px;font-weight:950;letter-spacing:-2px;margin:8px 0 0}
+.hero-name{font-size:21px;font-weight:850}.hero-trophies{font-size:42px;font-weight:950;letter-spacing:-2px;margin:8px 0 0}
 .rank{background:#33294f;color:#cdbdff;padding:9px 12px;border-radius:11px;font-size:12px;font-weight:800}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.stat{background:#10141f;padding:13px;border-radius:13px;min-width:0}
-.stat b{display:block;font-size:21px;margin-bottom:5px}
-.stat span{font-size:11px;color:var(--muted)}
+.stat{background:var(--panel2);padding:13px;border-radius:13px;min-width:0}
+.stat b{display:block;font-size:21px;margin-bottom:5px}.stat span{font-size:11px;color:var(--muted)}
 .progress{height:9px;background:#303448;border-radius:20px;overflow:hidden;margin-top:10px}
 .progress>div{height:100%;background:linear-gradient(90deg,#8060e9,#b59cff);border-radius:20px}
-input,select{background:#0e121d;color:var(--text);border:1px solid var(--line);
- border-radius:11px;padding:12px;min-width:0}
+input,select{background:#0e121d;color:var(--text);border:1px solid var(--line);border-radius:11px;padding:12px;min-width:0}
 input{width:100%}
-button.primary{background:var(--purple);color:white;border:0;border-radius:11px;
- padding:12px 16px;font-weight:800}
-button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
- border-radius:11px;padding:10px 13px}
-.search{display:flex;gap:8px}
-.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
-.toolbar input{flex:1}
-.toolbar select{flex:1}
-.nav{position:fixed;z-index:5;bottom:0;left:0;right:0;
- background:rgba(17,20,31,.96);backdrop-filter:blur(16px);
- border-top:1px solid var(--line);display:flex;justify-content:center;
- padding:9px 8px calc(9px + env(safe-area-inset-bottom))}
+button.primary{background:var(--purple);color:white;border:0;border-radius:11px;padding:12px 16px;font-weight:800}
+button.secondary{background:#252a3a;color:white;border:1px solid var(--line);border-radius:11px;padding:10px 13px}
+.search{display:flex;gap:8px}.toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:13px}
+.toolbar input,.toolbar select{flex:1}
+.nav{position:fixed;z-index:5;bottom:0;left:0;right:0;background:rgba(17,20,31,.96);backdrop-filter:blur(16px);border-top:1px solid var(--line);display:flex;justify-content:center;padding:9px 8px calc(9px + env(safe-area-inset-bottom))}
 .nav-inner{display:flex;width:100%;max-width:650px;justify-content:space-around}
-.nav button{background:none;border:0;color:var(--muted);font-size:11px;
- display:flex;flex-direction:column;align-items:center;gap:5px;padding:5px 12px}
-.nav button.active{color:#c5b3ff}
-.nav .ico{font-size:20px}
+.nav button{background:none;border:0;color:var(--muted);font-size:11px;display:flex;flex-direction:column;align-items:center;gap:5px;padding:5px 12px}
+.nav button.active{color:#c5b3ff}.nav .ico{font-size:20px}
 .brawler-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.brawler{background:#10141f;border:1px solid var(--line);border-radius:15px;
- padding:11px;text-align:center;min-width:0}
+.brawler{background:var(--panel2);border:1px solid var(--line);border-radius:15px;padding:11px;text-align:center;min-width:0}
 .brawler img{width:76px;height:76px;object-fit:contain;display:block;margin:0 auto 5px}
-.brawler-name{font-size:12px;font-weight:850;white-space:nowrap;
- overflow:hidden;text-overflow:ellipsis}
-.brawler-meta{display:flex;justify-content:space-between;gap:4px;
- font-size:10px;color:var(--muted);margin-top:8px}
+.brawler-name{font-size:12px;font-weight:850;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brawler-meta{display:flex;justify-content:space-between;gap:4px;font-size:10px;color:var(--muted);margin-top:8px}
 .power{color:#d0c0ff;background:#30264b;border-radius:7px;padding:4px 6px}
 .empty{text-align:center;color:var(--muted);padding:30px 10px}
 .calc-number{font-size:29px;font-weight:950;margin:8px 0}
 .calc-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
-.calc-item{background:#10141f;padding:13px;border-radius:13px}
+.calc-item{background:var(--panel2);padding:13px;border-radius:13px}
 .calc-item b{display:block;font-size:19px;margin-top:6px}
 .notice{font-size:11px;color:var(--muted);line-height:1.5;margin-top:12px}
-.error{color:#ff8585;font-size:12px;margin-top:10px}
-.hidden{display:none!important}
-@media(min-width:700px){
- .brawler-grid{grid-template-columns:repeat(5,1fr)}
- .app{padding-top:30px}
-}
-@media(max-width:480px){
- .stats{grid-template-columns:repeat(2,1fr)}
- .brawler-grid{grid-template-columns:repeat(2,1fr)}
- .hero-trophies{font-size:35px}
- .nav button{padding:5px 8px}
-}
+.hidden{display:none!important}.error{color:#ff8585;font-size:12px;margin-top:10px}
+.break-row{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:13px}
+.pill{font-size:10px;padding:4px 7px;border-radius:7px;background:#30264b;color:#d0c0ff}
+@media(min-width:700px){.brawler-grid{grid-template-columns:repeat(5,1fr)}.app{padding-top:30px}}
+@media(max-width:480px){.stats{grid-template-columns:repeat(2,1fr)}.brawler-grid{grid-template-columns:repeat(2,1fr)}.hero-trophies{font-size:35px}.nav button{padding:5px 8px}}
 </style>
 </head>
 <body>
@@ -95,7 +65,6 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
  <div class="status" id="status">● Подключение</div>
 </header>
 
-<!-- ГЛАВНАЯ -->
 <section class="page active" id="home">
  <div class="panel">
   <h2>Поиск игрока</h2>
@@ -105,7 +74,6 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
   </div>
   <div class="muted" id="message" style="margin-top:10px">Загрузка профиля...</div>
  </div>
-
  <div id="profile" class="hidden">
   <div class="panel hero">
    <div class="row">
@@ -118,21 +86,11 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
     <div class="rank" id="rank">Ранг</div>
    </div>
   </div>
-
   <div class="panel">
-   <div class="row">
-    <h2 style="margin:0">Моя цель</h2>
-    <button class="secondary" id="editGoal">Изменить</button>
-   </div>
+   <div class="row"><h2 style="margin:0">Моя цель</h2><button class="secondary" id="editGoal">Изменить</button></div>
    <div class="row" style="margin-top:15px">
-    <div>
-     <div class="muted">Текущий прогресс</div>
-     <b id="goalPercent" style="font-size:25px">0%</b>
-    </div>
-    <div style="text-align:right">
-     <div class="muted">Цель</div>
-     <b id="goalValue">150 000</b>
-    </div>
+    <div><div class="muted">Текущий прогресс</div><b id="goalPercent" style="font-size:25px">0%</b></div>
+    <div style="text-align:right"><div class="muted">Цель</div><b id="goalValue">150 000</b></div>
    </div>
    <div class="progress"><div id="goalBar" style="width:0%"></div></div>
    <div class="muted" id="goalLeft" style="margin-top:9px"></div>
@@ -141,7 +99,6 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
     <button class="primary" id="saveGoal" style="margin-top:8px;width:100%">Сохранить цель</button>
    </div>
   </div>
-
   <div class="panel">
    <h2>Статистика аккаунта</h2>
    <div class="stats">
@@ -151,37 +108,29 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
     <div class="stat"><b id="prestige">0</b><span>Престиж</span></div>
    </div>
   </div>
-
   <div class="panel">
-   <div class="row">
-    <h2 style="margin:0">Бойцы</h2>
-    <button class="secondary" onclick="showPage('brawlers')">Все бойцы →</button>
+   <div class="row"><h2 style="margin:0">Прокачка бойцов</h2><button class="secondary" onclick="showPage('brawlers')">Все →</button></div>
+   <div class="stats" style="margin-top:14px">
+    <div class="stat"><b id="count11">0</b><span>Сила 11</span></div>
+    <div class="stat"><b id="count10">0</b><span>Сила 10</span></div>
+    <div class="stat"><b id="count9">0</b><span>Сила 9</span></div>
+    <div class="stat"><b id="countBelow9">0</b><span>Ниже 9</span></div>
    </div>
-<div class="stats" style="margin-top:14px">
- <div class="stat"><b id="count11">0</b><span>Сила 11</span></div>
- <div class="stat"><b id="count10">0</b><span>Сила 10</span></div>
- <div class="stat"><b id="count9">0</b><span>Сила 9</span></div>
- <div class="stat"><b id="countBelow9">0</b><span>Ниже 9</span></div>
-</div>
   </div>
  </div>
 </section>
 
-<!-- БОЙЦЫ -->
 <section class="page" id="brawlersPage">
  <div class="panel">
-  <div class="row">
-   <div>
-    <h2 style="margin:0">Мои бойцы</h2>
-    <div class="muted" id="brawlerCount" style="margin-top:5px">Загрузка...</div>
-   </div>
-  </div>
+  <h2 style="margin-bottom:5px">Мои бойцы</h2>
+  <div class="muted" id="brawlerCount">Загрузка...</div>
   <div class="toolbar" style="margin-top:15px">
    <input id="brawlerSearch" placeholder="Поиск бойца...">
    <select id="brawlerFilter">
     <option value="all">Все бойцы</option>
-    <option value="weak">Сила ниже 9</option>
-    <option value="nine">Сила 9–10</option>
+    <option value="weak">Ниже 9 силы</option>
+    <option value="nine">Сила 9</option>
+    <option value="ten">Сила 10</option>
     <option value="max">Сила 11</option>
    </select>
    <select id="brawlerSort">
@@ -195,260 +144,241 @@ button.secondary{background:#252a3a;color:white;border:1px solid var(--line);
  </div>
 </section>
 
-<!-- ПРОКАЧКА -->
 <section class="page" id="upgradePage">
  <div class="panel">
-  <h2>Калькулятор прокачки</h2>
-  <div class="muted">Расчёт стоимости повышения силы всех твоих бойцов до 11 уровня.</div>
+  <h2>Полная прокачка аккаунта</h2>
+  <div class="muted">Сколько ресурсов осталось потратить на улучшения всех твоих бойцов.</div>
   <div class="calc-number" id="upgradeTotal">0</div>
-  <div class="muted">монет потребуется на уровни силы</div>
+  <div class="muted">монет на повышение силы до 11 уровня</div>
   <div class="progress"><div id="upgradeBar" style="width:0%"></div></div>
-  <div class="row muted" style="margin-top:9px">
-   <span id="upgradeDone">Уже прокачано: 0</span>
-   <span id="upgradePercent">0%</span>
-  </div>
+  <div class="row muted" style="margin-top:9px"><span id="upgradeDone">Уже вложено: 0</span><span id="upgradePercent">0%</span></div>
  </div>
  <div class="calc-grid">
-  <div class="calc-item">
-   <div class="muted">Бойцов до 11 силы</div>
-   <b id="notMax">0</b>
-  </div>
-  <div class="calc-item">
-   <div class="muted">Бойцов на 11 силе</div>
-   <b id="alreadyMax">0</b>
-  </div>
-  <div class="calc-item">
-   <div class="muted">Очков силы потребуется</div>
-   <b id="powerPoints">0</b>
-  </div>
-  <div class="calc-item">
-   <div class="muted">Стоимость гаджетов и способностей</div>
-   <b>Отдельно</b>
-  </div>
+  <div class="calc-item"><div class="muted">Бойцы ниже 11 силы</div><b id="notMax">0</b></div>
+  <div class="calc-item"><div class="muted">Уже на 11 силе</div><b id="alreadyMax">0</b></div>
+  <div class="calc-item"><div class="muted">Нужно очков силы</div><b id="powerPoints">0</b></div>
+  <div class="calc-item"><div class="muted">Гаджеты и звёздные силы</div><b id="abilityCost">0</b></div>
  </div>
  <div class="panel" style="margin-top:14px">
-  <h2>Стоимость улучшения силы</h2>
+  <h2>Недостающие улучшения</h2>
   <div id="upgradeBreakdown"></div>
-  <div class="notice">
-   В расчёт входят только улучшения уровня силы. Гаджеты, звёздные силы, снаряжение, гиперзаряды и баффи не включены: API не предоставляет достаточно надёжной информации о том, какие из них уже куплены. Не хочу показывать тебе выдуманную сумму.
+ </div>
+ <div class="panel">
+  <h2>Снаряжение, гиперзаряды и баффи</h2>
+  <div class="calc-grid">
+   <div class="calc-item"><div class="muted">Снаряжение</div><b id="gearCost">—</b></div>
+   <div class="calc-item"><div class="muted">Гиперзаряды</div><b id="hyperCost">—</b></div>
+   <div class="calc-item"><div class="muted">Баффи</div><b id="buffieCost">—</b></div>
+   <div class="calc-item"><div class="muted">Общая оценка</div><b id="estimatedTotal">—</b></div>
   </div>
+  <div class="notice" id="estimateNote">Оценка будет рассчитана после загрузки каталога. Для предметов, которые API не показывает в профиле, будет указана приблизительная стоимость.</div>
+ </div>
+ <div class="panel">
+  <h2>Стоимость уровней силы</h2>
+  <div id="levelBreakdown"></div>
+  <div class="notice">Цены: от 20 монет и 20 очков силы за переход на силу 2 до 2 800 монет и 1 440 очков силы за переход на силу 11. Гаджеты, звёздные силы, снаряжение, гиперзаряды и баффи считаются отдельно.</div>
  </div>
 </section>
 </div>
 
-<nav class="nav">
- <div class="nav-inner">
-  <button class="active" data-page="home"><span class="ico">⌂</span>Главная</button>
-  <button data-page="brawlers"><span class="ico">♟</span>Бойцы</button>
-  <button data-page="upgrade"><span class="ico">▤</span>Прокачка</button>
- </div>
-</nav>
+<nav class="nav"><div class="nav-inner">
+ <button class="active" data-page="home"><span class="ico">⌂</span>Главная</button>
+ <button data-page="brawlers"><span class="ico">♟</span>Бойцы</button>
+ <button data-page="upgrade"><span class="ico">▤</span>Прокачка</button>
+</div></nav>
 
 <script>
-const $ = id => document.getElementById(id);
-let player = null;
-let goal = Number(localStorage.getItem("brawlGoal")) || 150000;
+const $=id=>document.getElementById(id);
+let player=null, catalog=[];
+let goal=Number(localStorage.getItem("brawlGoal"))||150000;
 
-const upgradeCosts = [0,20,35,75,140,290,480,800,1250,1875,2800];
-const powerPointCosts = [0,20,30,50,80,130,210,340,550,890,1440];
-
-function fmt(n){
- return Number(n || 0).toLocaleString("ru-RU");
-}
+const coinCost=[0,20,35,75,140,290,480,800,1250,1875,2800];
+const ppCost=[0,20,30,50,80,130,210,340,550,890,1440];
+const fmt=n=>Number(n||0).toLocaleString("ru-RU");
 
 function showPage(name){
  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
  document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));
- const pageId = name === "home" ? "home" : name+"Page";
- $(pageId).classList.add("active");
+ const id=name==="home"?"home":name+"Page";
+ $(id).classList.add("active");
  document.querySelector('[data-page="'+name+'"]').classList.add("active");
  window.scrollTo(0,0);
 }
-
-document.querySelectorAll(".nav button").forEach(button=>{
- button.addEventListener("click",()=>showPage(button.dataset.page));
-});
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>showPage(b.dataset.page));
 
 function renderGoal(){
  if(!player)return;
- const trophies = player.trophies || 0;
- const percent = Math.min(100,trophies/goal*100);
- $("goalPercent").textContent = percent.toFixed(1)+"%";
- $("goalValue").textContent = fmt(goal);
- $("goalBar").style.width = percent+"%";
- $("goalLeft").textContent = trophies >= goal
-  ? "Цель достигнута. Пора ставить новую!"
-  : "Осталось "+fmt(goal-trophies)+" трофеев";
+ const t=player.trophies||0,p=Math.min(100,t/goal*100);
+ $("goalPercent").textContent=p.toFixed(1)+"%";
+ $("goalValue").textContent=fmt(goal);
+ $("goalBar").style.width=p+"%";
+ $("goalLeft").textContent=t>=goal?"Цель достигнута!":"Осталось "+fmt(goal-t)+" трофеев";
 }
-
 $("editGoal").onclick=()=>{
  $("goalEditor").classList.toggle("hidden");
  $("goalInput").value=goal;
 };
-
 $("saveGoal").onclick=()=>{
- const value = Number($("goalInput").value);
- if(!value || value<1){
-  alert("Введи корректную цель");
-  return;
- }
- goal=value;
- localStorage.setItem("brawlGoal",String(goal));
- $("goalEditor").classList.add("hidden");
- renderGoal();
+ const n=Number($("goalInput").value);
+ if(!n||n<1)return alert("Введи корректную цель");
+ goal=n;localStorage.setItem("brawlGoal",String(n));
+ $("goalEditor").classList.add("hidden");renderGoal();
 };
+
+function escapeHTML(v){
+ return String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
 
 function renderBrawlers(){
  if(!player)return;
  const all=player.brawlers||[];
  const search=$("brawlerSearch").value.trim().toLowerCase();
- const filter=$("brawlerFilter").value;
- const sort=$("brawlerSort").value;
- let list=all.filter(b=>b.name.toLowerCase().includes(search));
-
+ const filter=$("brawlerFilter").value,sort=$("brawlerSort").value;
+ let list=all.filter(b=>(b.name||"").toLowerCase().includes(search));
  if(filter==="weak")list=list.filter(b=>b.power<9);
- if(filter==="nine")list=list.filter(b=>b.power>=9&&b.power<11);
- if(filter==="max")list=list.filter(b=>b.power===11);
-
+ if(filter==="nine")list=list.filter(b=>b.power===9);
+ if(filter==="ten")list=list.filter(b=>b.power===10);
+ if(filter==="max")list=list.filter(b=>b.power>=11);
  if(sort==="trophies")list.sort((a,b)=>b.trophies-a.trophies);
  if(sort==="power")list.sort((a,b)=>b.power-a.power);
  if(sort==="name")list.sort((a,b)=>a.name.localeCompare(b.name));
  if(sort==="rank")list.sort((a,b)=>b.rank-a.rank);
-
  $("brawlerCount").textContent=list.length+" из "+all.length+" бойцов";
-
  $("brawlerGrid").innerHTML=list.map(b=>`
   <div class="brawler">
-   <img loading="lazy"
-    src="https://cdn.brawlify.com/brawlers/borderless/${b.id}.png"
-    alt="${escapeHTML(b.name)}"
-    onerror="this.style.opacity='.2';this.alt='Нет изображения'">
+   <img loading="lazy" src="https://cdn.brawlify.com/brawlers/borderless/${b.id}.png" alt="${escapeHTML(b.name)}" onerror="this.style.opacity='.2'">
    <div class="brawler-name">${escapeHTML(b.name)}</div>
-   <div class="brawler-meta">
-    <span class="power">${b.power} СИЛА</span>
-    <span>🏆 ${fmt(b.trophies)}</span>
-   </div>
-   <div class="brawler-meta">
-    <span>Ранг ${b.rank}</span>
-    <span>Макс. ${fmt(b.highestTrophies)}</span>
-   </div>
-  </div>
- `).join("") || '<div class="empty">Ничего не найдено</div>';
+   <div class="brawler-meta"><span class="power">${b.power} СИЛА</span><span>🏆 ${fmt(b.trophies)}</span></div>
+   <div class="brawler-meta"><span>Ранг ${b.rank}</span><span>Макс. ${fmt(b.highestTrophies)}</span></div>
+  </div>`).join("")||'<div class="empty">Ничего не найдено</div>';
 }
 
-function escapeHTML(value){
- return String(value??"").replace(/[&<>"']/g,c=>({
-  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"
- }[c]));
+function ownedIds(b,key){
+ return new Set((b[key]||[]).map(x=>String(x.id)));
 }
 
-function renderUpgrade(){
- if(!player)return;
+function calculateUpgrades(){
  const all=player.brawlers||[];
- let remainingCoins=0;
- let remainingPoints=0;
- let spentCoins=0;
- let spentPoints=0;
-
+ let levelCoins=0,points=0,spent=0;
  all.forEach(b=>{
-  const power=Math.min(11,Math.max(1,Number(b.power)||1));
-  for(let level=power;level<11;level++){
-   remainingCoins+=upgradeCosts[level+1];
-   remainingPoints+=powerPointCosts[level+1];
-  }
-  for(let level=2;level<=power;level++){
-   spentCoins+=upgradeCosts[level];
-   spentPoints+=powerPointCosts[level];
-  }
+  const p=Math.min(11,Math.max(1,Number(b.power)||1));
+  for(let l=p+1;l<=11;l++){levelCoins+=coinCost[l];points+=ppCost[l];}
+  for(let l=2;l<=p;l++)spent+=coinCost[l];
  });
-
+ const total=all.length*7765;
  const max=all.filter(b=>b.power>=11).length;
- const notMax=all.length-max;
- const fullCoins=all.length*7765;
- const completed=fullCoins-remainingCoins;
- const percent=fullCoins?completed/fullCoins*100:100;
-
- $("upgradeTotal").textContent=fmt(remainingCoins);
- $("notMax").textContent=fmt(notMax);
+ const pct=total?spent/total*100:100;
+ $("upgradeTotal").textContent=fmt(levelCoins);
+ $("upgradeBar").style.width=pct+"%";
+ $("upgradeDone").textContent="Уже вложено: "+fmt(spent)+" монет";
+ $("upgradePercent").textContent=pct.toFixed(1)+"%";
+ $("notMax").textContent=fmt(all.length-max);
  $("alreadyMax").textContent=fmt(max);
- $("powerPoints").textContent=fmt(remainingPoints);
- $("upgradeDone").textContent="Уже потрачено: "+fmt(completed)+" монет";
- $("upgradePercent").textContent=percent.toFixed(1)+"%";
- $("upgradeBar").style.width=percent+"%";
+ $("powerPoints").textContent=fmt(points);
 
- const levels=[
-  ["До силы 2",20],["До силы 3",35],["До силы 4",75],
-  ["До силы 5",140],["До силы 6",290],["До силы 7",480],
-  ["До силы 8",800],["До силы 9",1250],
-  ["До силы 10",1875],["До силы 11",2800]
- ];
+ let missingGadgets=0,missingStars=0,ownedGadgets=0,ownedStars=0;
+ let availableGadgets=0,availableStars=0;
+ const byId=new Map(catalog.map(b=>[String(b.id),b]));
+ all.forEach(b=>{
+  const meta=byId.get(String(b.id));
+  if(!meta)return;
+  const g=meta.gadgets||[],s=meta.starPowers||[];
+  const og=ownedIds(b,"gadgets"),os=ownedIds(b,"starPowers");
+  const mg=g.filter(x=>x.released!==false&&!og.has(String(x.id))).length;
+  const ms=s.filter(x=>x.released!==false&&!os.has(String(x.id))).length;
+  availableGadgets+=g.length;availableStars+=s.length;
+  ownedGadgets+=g.length-mg;ownedStars+=s.length-ms;
+  if(b.power>=7)missingGadgets+=mg;
+  if(b.power>=9)missingStars+=ms;
+ });
+ const gadgetCoins=missingGadgets*1000;
+ const starCoins=missingStars*2000;
+ const abilityTotal=gadgetCoins+starCoins;
+ $("abilityCost").textContent=fmt(abilityTotal);
+ $("upgradeBreakdown").innerHTML=`
+  <div class="break-row"><span>Недостающие гаджеты</span><b>${missingGadgets} · ${fmt(gadgetCoins)} монет</b></div>
+  <div class="break-row"><span>Недостающие звёздные силы</span><b>${missingStars} · ${fmt(starCoins)} монет</b></div>
+  <div class="break-row"><span>Всего известных способностей</span><b>${fmt(abilityTotal)} монет</b></div>
+  <div class="break-row"><span>Куплено гаджетов по каталогу</span><b>${ownedGadgets} / ${availableGadgets}</b></div>
+  <div class="break-row"><span>Куплено звёздных сил по каталогу</span><b>${ownedStars} / ${availableStars}</b></div>
+ `;
+ const levelRows=["Сила 2|20|20","Сила 3|35|30","Сила 4|75|50","Сила 5|140|80","Сила 6|290|130","Сила 7|480|210","Сила 8|800|340","Сила 9|1 250|550","Сила 10|1 875|890","Сила 11|2 800|1 440"];
+ $("levelBreakdown").innerHTML=levelRows.map(x=>{
+  const a=x.split("|");
+  return `<div class="break-row"><span>${a[0]}</span><b>${a[1]} монет · ${a[2]} ОC</b></div>`;
+ }).join("");
+ const gearCount=all.reduce((n,b)=>n+(b.gears||[]).length,0);
+ const gearEstimate=Math.max(0,all.length*6-gearCount)*1000;
+ const hyperOwned=all.reduce((n,b)=>n+(b.hyperCharges||b.hypercharges||[]).length,0);
+ const buffieOwned=all.reduce((n,b)=>n+(b.buffies||[]).length,0);
+ const hyperEstimate=Math.max(0,all.length-hyperOwned)*5000;
+ const buffieEstimate=Math.max(0,all.length*3-buffieOwned)*1000;
+ $("gearCost").textContent="≈ "+fmt(gearEstimate);
+ $("hyperCost").textContent="≈ "+fmt(hyperEstimate);
+ $("buffieCost").textContent="≈ "+fmt(buffieEstimate)+" + очки силы";
+ $("estimatedTotal").textContent="≈ "+fmt(levelCoins+abilityTotal+gearEstimate+hyperEstimate+buffieEstimate);
+ $("estimateNote").textContent="Оценка снаряжения предполагает до 6 стандартных покупок на бойца по 1 000 монет. Гиперзаряды предполагают по одному на бойца, баффи — по три. Не у каждого бойца все эти предметы доступны. API не сообщает полный список гиперзарядов и баффи, а также их владение, поэтому эти три суммы ориентировочные. Не учитываются особые цены Epic/Mythic Gear.";
+}
 
- $("upgradeBreakdown").innerHTML=levels.map((item,i)=>`
-  <div class="row" style="padding:9px 0;border-bottom:1px solid var(--line)">
-   <span class="muted">${item[0]}</span>
-   <b>${fmt(item[1])} монет</b>
-  </div>
- `).join("")+
- `<div class="row" style="padding-top:12px">
-  <b>Полная стоимость одного бойца</b><b>7 765</b>
- </div>`;
+function renderProfile(data){
+ $("profile").classList.remove("hidden");
+ $("playerName").textContent=data.name||"Игрок";
+ $("playerTag").textContent=data.tag||"";
+ $("trophies").textContent=fmt(data.trophies);
+ $("rank").textContent=data.rankedRankName||"Без ранга";
+ $("three").textContent=fmt(data["3vs3Victories"]);
+ $("solo").textContent=fmt(data.soloVictories);
+ $("duo").textContent=fmt(data.duoVictories);
+ $("prestige").textContent=fmt(data.totalPrestigeLevel);
+ const all=data.brawlers||[];
+ $("count11").textContent=all.filter(b=>b.power>=11).length;
+ $("count10").textContent=all.filter(b=>b.power===10).length;
+ $("count9").textContent=all.filter(b=>b.power===9).length;
+ $("countBelow9").textContent=all.filter(b=>b.power<9).length;
+ renderGoal();renderBrawlers();calculateUpgrades();
 }
 
 async function loadPlayer(){
  const tag=$("tag").value.trim();
  if(!tag)return;
- $("load").disabled=true;
- $("message").textContent="Загружаем профиль...";
+ $("load").disabled=true;$("message").textContent="Загружаем профиль...";
  $("status").textContent="● Загрузка";
-
  try{
-  const response=await fetch(
-   "/.netlify/functions/player?tag="+encodeURIComponent(tag)
-  );
+  const response=await fetch("/.netlify/functions/player?tag="+encodeURIComponent(tag));
   const data=await response.json();
   if(!response.ok)throw new Error(data.error||"Ошибка API");
-  if(!data.brawlers)throw new Error("Не удалось получить список бойцов");
-
+  if(!data.brawlers)throw new Error("Не удалось получить бойцов");
   player=data;
-  $("profile").classList.remove("hidden");
-  $("playerName").textContent=data.name||"Игрок";
-  $("playerTag").textContent=data.tag||"";
-  $("trophies").textContent=fmt(data.trophies);
-  $("rank").textContent=data.rankedRankName||"Без ранга";
-  $("three").textContent=fmt(data["3vs3Victories"]);
-  $("solo").textContent=fmt(data.soloVictories);
-  $("duo").textContent=fmt(data.duoVictories);
-  $("prestige").textContent=fmt(data.totalPrestigeLevel);
-
-  const all=data.brawlers;
-  $("totalBrawlers").textContent=all.length;
-  $("weakBrawlers").textContent=all.filter(b=>b.power<9).length;
-  $("maxBrawlers").textContent=all.filter(b=>b.power===11).length;
-  $("avgPower").textContent=(all.reduce((s,b)=>s+b.power,0)/Math.max(1,all.length)).toFixed(1);
-
+  renderProfile(data);
   $("message").textContent="Профиль успешно загружен";
   $("status").textContent="● API подключён";
-  renderGoal();
-  renderBrawlers();
-  renderUpgrade();
- }catch(error){
-  $("message").textContent=error.message;
-  $("status").textContent="● Ошибка";
+ }catch(e){
+  $("message").textContent=e.message;
   $("message").className="error";
- }finally{
-  $("load").disabled=false;
+  $("status").textContent="● Ошибка";
+ }finally{$("load").disabled=false;}
+}
+
+async function loadCatalog(){
+ try{
+  const r=await fetch("https://api.brawlapi.com/v1/brawlers");
+  if(!r.ok)throw new Error("Каталог недоступен");
+  const data=await r.json();
+  catalog=data.list||[];
+  if(player)calculateUpgrades();
+ }catch(e){
+  $("estimateNote").textContent="Не удалось загрузить каталог предметов. Точный расчёт гаджетов и звёздных сил временно недоступен. "+e.message;
  }
 }
 
-$("load").addEventListener("click",loadPlayer);
-$("tag").addEventListener("keydown",e=>{
- if(e.key==="Enter")loadPlayer();
-});
+$("load").onclick=loadPlayer;
+$("tag").addEventListener("keydown",e=>{if(e.key==="Enter")loadPlayer()});
 $("brawlerSearch").addEventListener("input",renderBrawlers);
 $("brawlerFilter").addEventListener("change",renderBrawlers);
 $("brawlerSort").addEventListener("change",renderBrawlers);
 
 loadPlayer();
+loadCatalog();
 </script>
 </body>
 </html>
