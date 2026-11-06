@@ -3,168 +3,323 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Brawl Tracker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0b0d13">
+<title>BRAWL.TRACKER</title>
 <style>
-:root {
-  color-scheme: dark;
-  --bg:#0c0d12;
-  --panel:#171922;
-  --panel2:#20232e;
-  --text:#f4f4f7;
-  --muted:#9296a5;
-  --accent:#ffcc32;
-  --border:#292c38;
+:root{
+  color-scheme:dark;
+  --bg:#0b0d13;
+  --surface:#121620;
+  --card:#181e2a;
+  --card2:#202838;
+  --border:#293244;
+  --text:#f4f6fb;
+  --muted:#8994a8;
+  --yellow:#ffce45;
+  --blue:#65a8ff;
+  --green:#58d6a0;
+  --red:#ff7185;
 }
 *{box-sizing:border-box}
 body{
-  margin:0;background:var(--bg);color:var(--text);
-  font-family:Arial, sans-serif;
+  margin:0;
+  background:
+    radial-gradient(ellipse at 80% -10%,#26334b 0,transparent 38%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  min-height:100vh;
 }
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{max-width:1100px;margin:auto;padding:0 17px 100px}
 header{
-  padding:22px 16px 16px;
-  border-bottom:1px solid var(--border);
-  background:#11131a;
+  padding:22px 0 17px;
+  display:flex;justify-content:space-between;align-items:center;
+  border-bottom:1px solid #ffffff12;
 }
-.wrap{max-width:1100px;margin:auto}
-.logo{font-size:23px;font-weight:900}
-.logo span{color:var(--accent)}
-.subtitle{color:var(--muted);font-size:13px;margin-top:5px}
-main{max-width:1100px;margin:auto;padding:18px 14px 50px}
+.brand{font-size:22px;font-weight:950;letter-spacing:-1px}
+.brand span{color:var(--yellow)}
+.brand-sub{font-size:11px;color:var(--muted);margin-top:3px;letter-spacing:1.5px}
+.online{
+  display:flex;align-items:center;gap:7px;
+  color:var(--green);font-size:11px;font-weight:700;
+  background:#58d6a012;padding:8px 11px;border-radius:20px;
+}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--green)}
 .search{
-  display:flex;gap:8px;margin-bottom:18px
+  display:flex;gap:9px;margin:19px 0;
 }
-input,button,select{
-  border:1px solid var(--border);border-radius:11px;
-  background:var(--panel2);color:var(--text);
-  padding:13px;font-size:15px;min-width:0
+input,select{
+  background:var(--card);color:var(--text);
+  border:1px solid var(--border);border-radius:12px;
+  padding:13px;min-width:0;outline:none;
 }
-input{flex:1}
-button{
-  background:var(--accent);color:#171717;
-  border:0;font-weight:800;cursor:pointer
+input:focus,select:focus{border-color:var(--blue)}
+.search input{flex:1}
+.primary{
+  background:var(--yellow);color:#17191e;border:0;
+  border-radius:12px;padding:0 19px;font-weight:900;
 }
-button:disabled{opacity:.5}
-.panel{
-  background:var(--panel);border:1px solid var(--border);
-  border-radius:16px;padding:16px;margin-bottom:16px
+.primary:disabled{opacity:.5}
+.status{font-size:12px;color:var(--muted);margin:-8px 0 13px}
+.status.error{color:var(--red)}
+.page{display:none}
+.page.active{display:block;animation:appear .2s ease}
+@keyframes appear{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:none}}
+.eyebrow{
+  color:var(--yellow);font-size:10px;font-weight:900;
+  letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;
 }
-.hidden{display:none!important}
-.player-top{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:12px;flex-wrap:wrap
+h1{font-size:27px;letter-spacing:-1px;margin:0 0 5px}
+h2{font-size:17px;margin:0;font-weight:850}
+.sub{font-size:12px;color:var(--muted);line-height:1.5}
+.card{
+  background:linear-gradient(145deg,#1a2230,#141923);
+  border:1px solid var(--border);
+  border-radius:19px;padding:17px;margin-bottom:13px;
+  box-shadow:0 10px 30px #00000015;
 }
-.player-name{font-size:22px;font-weight:900}
-.muted{color:var(--muted)}
-.trophies{color:var(--accent);font-weight:900;font-size:20px}
+.player-card{
+  display:flex;align-items:center;justify-content:space-between;
+  gap:12px;margin-top:17px;
+}
+.player-name{font-size:21px;font-weight:900;letter-spacing:-.5px}
+.player-tag{font-size:12px;color:var(--muted);margin-top:5px}
+.trophy-total{font-size:21px;color:var(--yellow);font-weight:950;white-space:nowrap}
+.trophy-total small{font-size:11px;color:var(--muted);display:block;text-align:right}
+.goal-card{
+  position:relative;overflow:hidden;
+  background:linear-gradient(130deg,#302b1b,#1b2029 70%);
+  border-color:#6a572b;
+}
+.goal-card:after{
+  content:"🏆";position:absolute;right:10px;top:10px;
+  font-size:83px;opacity:.08;transform:rotate(-15deg);
+  pointer-events:none;
+}
+.goal-top{display:flex;justify-content:space-between;gap:10px;align-items:start}
+.goal-value{font-size:31px;font-weight:950;letter-spacing:-1px;color:var(--yellow)}
+.goal-percent{font-size:16px;font-weight:900;color:var(--green)}
+.goal-track{
+  height:12px;background:#ffffff15;border-radius:20px;
+  margin:17px 0 10px;overflow:hidden;
+}
+.goal-fill{
+  height:100%;width:0%;
+  background:linear-gradient(90deg,#f5a623,#ffdf65);
+  border-radius:20px;transition:width .6s;
+}
+.goal-bottom{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted)}
+.goal-edit{display:flex;gap:8px;margin-top:16px;position:relative;z-index:1}
+.goal-edit input{flex:1;width:50%;padding:10px;font-size:13px}
+.goal-edit button{
+  background:#ffce4520;border:1px solid #ffce4560;
+  color:var(--yellow);border-radius:10px;padding:0 13px;font-weight:800;
+}
+.milestones{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:13px;
+}
+.milestone{
+  background:#ffffff08;border:1px solid #ffffff10;
+  padding:11px 8px;border-radius:12px;text-align:center;
+}
+.milestone strong{display:block;font-size:15px}
+.milestone span{font-size:10px;color:var(--muted)}
+.milestone.done{border-color:#58d6a055;background:#58d6a010}
+.milestone.done strong{color:var(--green)}
+.section-title{
+  display:flex;justify-content:space-between;align-items:center;
+  gap:10px;margin:23px 2px 12px;
+}
+.section-title a{font-size:11px;color:var(--yellow);cursor:pointer}
 .stats{
-  display:grid;grid-template-columns:repeat(4,1fr);
-  gap:9px;margin-top:16px
+  display:grid;grid-template-columns:repeat(4,1fr);gap:9px;
 }
 .stat{
-  background:var(--panel2);border-radius:12px;
-  padding:13px 8px;text-align:center
+  background:var(--card);border:1px solid var(--border);
+  padding:14px 7px;border-radius:14px;text-align:center;
 }
-.stat strong{display:block;font-size:25px;margin-bottom:5px}
-.stat span{font-size:12px;color:var(--muted)}
-h2{font-size:18px;margin:0 0 14px}
-.section-head{
-  display:flex;justify-content:space-between;
-  align-items:center;gap:10px;flex-wrap:wrap
+.stat strong{font-size:24px;display:block;letter-spacing:-1px}
+.stat span{font-size:10px;color:var(--muted);display:block;margin-top:4px}
+.stat.s11 strong{color:var(--yellow)}
+.stat.s10 strong{color:var(--blue)}
+.stat.s9 strong{color:var(--green)}
+.stat.slow strong{color:#c2a1ff}
+.quick-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.quick{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:15px;padding:15px;cursor:pointer;
 }
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.filters select{padding:10px;font-size:13px}
-.brawlers{
+.quick-icon{font-size:23px;margin-bottom:9px}
+.quick strong{display:block;font-size:14px}
+.quick span{font-size:11px;color:var(--muted)}
+.brawler-grid{
   display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));
-  gap:10px
+  gap:10px;
 }
 .brawler{
-  background:var(--panel2);border:1px solid var(--border);
-  border-radius:13px;padding:10px;min-width:0
+  background:linear-gradient(145deg,#1d2635,#141923);
+  border:1px solid var(--border);border-radius:15px;
+  padding:11px;min-width:0;position:relative;overflow:hidden;
 }
 .brawler img{
   width:100%;height:105px;object-fit:contain;
-  display:block;margin-bottom:7px
+  display:block;margin-bottom:8px;
 }
-.brawler-name{font-weight:800;font-size:13px}
-.brawler-info{
-  display:flex;justify-content:space-between;
-  margin-top:7px;font-size:12px;color:var(--muted)
-}
-.power{color:var(--accent);font-weight:900}
-.progress-line{
-  height:7px;background:#303340;border-radius:9px;
-  overflow:hidden;margin-top:8px
-}
-.progress-line div{height:100%;background:var(--accent)}
-.upgrade-grid{
-  display:grid;grid-template-columns:repeat(2,1fr);gap:9px
-}
+.brawler-name{font-size:13px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brawler-info{display:flex;justify-content:space-between;gap:5px;margin-top:8px;font-size:11px;color:var(--muted)}
+.power{color:var(--yellow);font-weight:900}
+.filters{display:flex;gap:8px;margin:14px 0;flex-wrap:wrap}
+.filters input{flex:1;width:100px}
+.filters select{font-size:12px;padding:10px;flex:1}
+.count-label{font-size:11px;color:var(--muted);margin:0 0 12px}
+.upgrade-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 .upgrade{
-  background:var(--panel2);padding:13px;border-radius:12px
+  background:var(--card);border:1px solid var(--border);
+  border-radius:14px;padding:15px;
 }
-.upgrade strong{font-size:20px;display:block;margin-top:5px}
-.note{font-size:12px;color:var(--muted);line-height:1.5;margin-top:12px}
-.error{color:#ff7777;font-size:14px;margin-top:10px}
-.loading{color:var(--muted);font-size:14px;margin-top:10px}
+.upgrade span{font-size:11px;color:var(--muted)}
+.upgrade strong{display:block;font-size:23px;margin-top:7px}
+.upgrade small{font-size:10px;color:var(--muted)}
+.progress-track{height:9px;background:#ffffff12;border-radius:20px;overflow:hidden;margin-top:12px}
+.progress-fill{height:100%;background:linear-gradient(90deg,#4b9eff,#75c5ff);border-radius:20px}
+.cost-row{
+  display:flex;justify-content:space-between;gap:10px;
+  padding:12px 0;border-bottom:1px solid #ffffff10;font-size:12px;
+}
+.cost-row:last-child{border:0}
+.cost-row span{color:var(--muted)}
+.note{font-size:11px;color:var(--muted);line-height:1.6;margin-top:13px}
+.empty{padding:30px 10px;text-align:center;color:var(--muted);font-size:13px}
+.bottom-nav{
+  position:fixed;z-index:20;bottom:0;left:0;right:0;
+  background:#111722ed;backdrop-filter:blur(18px);
+  border-top:1px solid #ffffff15;
+  display:flex;justify-content:center;
+  padding:9px 10px calc(9px + env(safe-area-inset-bottom));
+}
+.nav-inner{width:100%;max-width:600px;display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.nav-btn{
+  border:0;background:transparent;color:var(--muted);
+  padding:8px 5px;border-radius:12px;font-size:10px;font-weight:800;
+}
+.nav-btn .nav-icon{font-size:19px;display:block;margin-bottom:4px}
+.nav-btn.active{color:var(--yellow);background:#ffce4510}
+@media(min-width:700px){
+  .app{padding-left:25px;padding-right:25px}
+  .overview-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:13px;align-items:start}
+  .overview-grid .card{height:100%}
+}
 @media(max-width:520px){
+  .app{padding-left:13px;padding-right:13px}
+  h1{font-size:24px}
   .stats{grid-template-columns:repeat(2,1fr)}
-  .upgrade-grid{grid-template-columns:1fr 1fr}
-  .brawlers{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .brawler-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .brawler img{height:90px}
+  .goal-value{font-size:27px}
 }
 </style>
 </head>
 <body>
+<div class="app">
 <header>
-  <div class="wrap">
-    <div class="logo">BRAWL <span>TRACKER</span></div>
-    <div class="subtitle">Статистика и прокачка Brawl Stars</div>
+  <div>
+    <div class="brand">BRAWL<span>.</span>TRACKER</div>
+    <div class="brand-sub">PLAYER STATISTICS</div>
   </div>
+  <div class="online"><span class="dot"></span> LIVE PROFILE</div>
 </header>
 
-<main>
-  <div class="search">
-    <input id="tagInput" value="8080QRRVQ" placeholder="Тег игрока">
-    <button id="loadButton" onclick="loadPlayer()">Найти</button>
+<div class="search">
+  <input id="tagInput" value="8080QRRVQ" placeholder="Тег игрока">
+  <button class="primary" id="loadButton" onclick="loadPlayer()">Загрузить</button>
+</div>
+<div id="status" class="status">Подключение к профилю...</div>
+
+<!-- ОБЗОР -->
+<section id="page-overview" class="page active">
+  <div class="eyebrow">PLAYER DASHBOARD</div>
+  <h1>Твой аккаунт</h1>
+  <div class="sub">Статистика, достижения и цели</div>
+
+  <div class="card player-card">
+    <div>
+      <div class="player-name" id="playerName">Brawl Stars Player</div>
+      <div class="player-tag" id="playerTag">#8080QRRVQ</div>
+    </div>
+    <div class="trophy-total">🏆 <span id="trophies">80 060</span><small>ТРОФЕЕВ</small></div>
   </div>
-  <div id="status" class="loading">Загрузи профиль игрока</div>
 
-  <section id="profile" class="panel hidden">
-    <div class="player-top">
+  <div class="card goal-card">
+    <div class="eyebrow">YOUR MAIN GOAL</div>
+    <div class="goal-top">
       <div>
-        <div class="player-name" id="playerName">Игрок</div>
-        <div class="muted" id="playerTag"></div>
+        <div class="sub">Цель по кубкам</div>
+        <div class="goal-value" id="goalValue">150 000</div>
       </div>
-      <div class="trophies">🏆 <span id="trophies">0</span></div>
+      <div class="goal-percent" id="goalPercent">53.4%</div>
     </div>
-
-    <div class="stats">
-      <div class="stat">
-        <strong id="count11">0</strong>
-        <span>Сила 11</span>
-      </div>
-      <div class="stat">
-        <strong id="count10">0</strong>
-        <span>Сила 10</span>
-      </div>
-      <div class="stat">
-        <strong id="count9">0</strong>
-        <span>Сила 9</span>
-      </div>
-      <div class="stat">
-        <strong id="countBelow9">0</strong>
-        <span>Ниже 9</span>
-      </div>
+    <div class="goal-track"><div class="goal-fill" id="goalFill"></div></div>
+    <div class="goal-bottom">
+      <span id="goalCurrent">80 060 кубков</span>
+      <span id="goalRemaining">Осталось 69 940</span>
     </div>
+    <div class="goal-edit">
+      <input id="goalInput" type="number" min="1" placeholder="Новая цель">
+      <button onclick="saveGoal()">Изменить цель</button>
+    </div>
+  </div>
 
-    <div class="note" id="totalBrawlers"></div>
-  </section>
+  <div class="milestones">
+    <div class="milestone" id="mile100">
+      <strong>100K</strong><span>Первая отметка</span>
+    </div>
+    <div class="milestone" id="mile150">
+      <strong>150K</strong><span>Главная цель</span>
+    </div>
+    <div class="milestone" id="mile200">
+      <strong>200K</strong><span>Следующий уровень</span>
+    </div>
+  </div>
 
-  <section id="brawlerSection" class="panel hidden">
-    <div class="section-head">
-      <h2>Бойцы</h2>
-      <span class="muted" id="shownCount"></span>
+  <div class="section-title">
+    <h2>Прокачка бойцов</h2>
+    <a onclick="showPage('brawlers')">Все бойцы →</a>
+  </div>
+  <div class="stats">
+    <div class="stat s11"><strong id="count11">0</strong><span>Сила 11</span></div>
+    <div class="stat s10"><strong id="count10">0</strong><span>Сила 10</span></div>
+    <div class="stat s9"><strong id="count9">0</strong><span>Сила 9</span></div>
+    <div class="stat slow"><strong id="countBelow9">0</strong><span>Ниже 9</span></div>
+  </div>
+
+  <div class="section-title"><h2>Разделы</h2></div>
+  <div class="quick-grid">
+    <div class="quick" onclick="showPage('brawlers')">
+      <div class="quick-icon">⚔️</div>
+      <strong>Бойцы</strong>
+      <span id="brawlerTotal">Список бойцов</span>
+    </div>
+    <div class="quick" onclick="showPage('upgrades')">
+      <div class="quick-icon">⚡</div>
+      <strong>Прокачка</strong>
+      <span>Стоимость до максимума</span>
+    </div>
+  </div>
+</section>
+
+<!-- БОЙЦЫ -->
+<section id="page-brawlers" class="page">
+  <div class="eyebrow">BRAWLER COLLECTION</div>
+  <h1>Бойцы</h1>
+  <div class="sub">Все бойцы твоего аккаунта и их прогресс</div>
+
+  <div class="card" style="margin-top:17px">
+    <div class="section-title" style="margin:0 0 10px">
+      <h2>Коллекция</h2>
+      <span class="sub" id="shownCount">0 бойцов</span>
     </div>
     <div class="filters">
       <input id="brawlerSearch" placeholder="Поиск бойца..." oninput="renderBrawlers()">
@@ -176,249 +331,282 @@ h2{font-size:18px;margin:0 0 14px}
         <option value="below">Ниже 9</option>
       </select>
       <select id="sortFilter" onchange="renderBrawlers()">
-        <option value="power">Сначала по силе</option>
+        <option value="power">По силе</option>
         <option value="trophies">По кубкам</option>
         <option value="name">По имени</option>
       </select>
     </div>
-    <div class="brawlers" id="brawlers"></div>
-  </section>
+    <div class="brawler-grid" id="brawlers">
+      <div class="empty">Загрузка бойцов...</div>
+    </div>
+  </div>
+</section>
 
-  <section id="upgradeSection" class="panel hidden">
-    <h2>Прокачка аккаунта</h2>
-    <div class="upgrade-grid">
-      <div class="upgrade">
-        <span class="muted">Монеты на силу 11</span>
-        <strong id="coinsNeeded">0</strong>
-      </div>
-      <div class="upgrade">
-        <span class="muted">Очки силы</span>
-        <strong id="pointsNeeded">0</strong>
-      </div>
-      <div class="upgrade">
-        <span class="muted">Бойцы ниже силы 11</span>
-        <strong id="notMaxed">0</strong>
-      </div>
-      <div class="upgrade">
-        <span class="muted">Прогресс силы</span>
-        <strong id="powerProgress">0%</strong>
-      </div>
+<!-- ПРОКАЧКА -->
+<section id="page-upgrades" class="page">
+  <div class="eyebrow">UPGRADE CALCULATOR</div>
+  <h1>Прокачка</h1>
+  <div class="sub">Сколько ресурсов нужно для максимальной силы</div>
+
+  <div class="card" style="margin-top:17px">
+    <h2>Общий прогресс</h2>
+    <div class="progress-track"><div class="progress-fill" id="progressBar" style="width:0%"></div></div>
+    <div class="cost-row" style="margin-top:10px">
+      <span>Готово бойцов</span><strong id="maxedCount">0</strong>
     </div>
-    <div class="progress-line"><div id="progressBar" style="width:0%"></div></div>
+    <div class="cost-row">
+      <span>Осталось прокачать</span><strong id="notMaxed">0</strong>
+    </div>
+    <div class="cost-row">
+      <span>Общий прогресс силы</span><strong id="powerProgress">0%</strong>
+    </div>
+  </div>
+
+  <div class="upgrade-grid">
+    <div class="upgrade">
+      <span>🪙 Монеты</span>
+      <strong id="coinsNeeded">0</strong>
+      <small>До силы 11</small>
+    </div>
+    <div class="upgrade">
+      <span>💠 Очки силы</span>
+      <strong id="pointsNeeded">0</strong>
+      <small>До силы 11</small>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:13px">
+    <h2>Стоимость улучшений</h2>
+    <div class="cost-row"><span>Гаджет</span><strong>1 000 🪙</strong></div>
+    <div class="cost-row"><span>Звёздная сила</span><strong>2 000 🪙</strong></div>
+    <div class="cost-row"><span>Гиперзаряд</span><strong>5 000 🪙</strong></div>
     <div class="note">
-      Стоимость силы рассчитана по текущему уровню каждого бойца.
-      Гаджеты и пассивки не включены в сумму монет выше.
-      Для полного расчёта всех предметов нужна отдельная проверка каталога игры.
+      Стоимость силы рассчитана по уровням каждого бойца.
+      Дополнительные предметы пока не включены в итоговую сумму:
+      для их точного расчёта необходимо сверить полный каталог и доступность предметов.
     </div>
-  </section>
-</main>
+  </div>
+</section>
+</div>
+
+<nav class="bottom-nav">
+  <div class="nav-inner">
+    <button class="nav-btn active" data-page="overview" onclick="showPage('overview')">
+      <span class="nav-icon">⌂</span>Обзор
+    </button>
+    <button class="nav-btn" data-page="brawlers" onclick="showPage('brawlers')">
+      <span class="nav-icon">⚔</span>Бойцы
+    </button>
+    <button class="nav-btn" data-page="upgrades" onclick="showPage('upgrades')">
+      <span class="nav-icon">⚡</span>Прокачка
+    </button>
+  </div>
+</nav>
 
 <script>
 const API_URL = "/.netlify/functions/player?tag=";
-
 const POWER_COSTS = [
   null,
-  {coins:20, points:20},
-  {coins:35, points:30},
-  {coins:75, points:50},
-  {coins:140, points:80},
-  {coins:290, points:130},
-  {coins:480, points:210},
-  {coins:800, points:340},
-  {coins:1250, points:550},
-  {coins:1875, points:890},
-  {coins:2800, points:1440}
+  {coins:20,points:20},
+  {coins:35,points:30},
+  {coins:75,points:50},
+  {coins:140,points:80},
+  {coins:290,points:130},
+  {coins:480,points:210},
+  {coins:800,points:340},
+  {coins:1250,points:550},
+  {coins:1875,points:890},
+  {coins:2800,points:1440}
 ];
 
 let player = null;
 let brawlers = [];
+let trophyGoal = Number(localStorage.getItem("brawlGoal")) || 150000;
 
 const $ = id => document.getElementById(id);
+const format = n => Number(n || 0).toLocaleString("ru-RU");
 
-function setStatus(message, isError=false) {
-  $("status").textContent = message;
-  $("status").className = isError ? "error" : "loading";
+function showPage(name){
+  document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.remove("active"));
+  $("page-"+name).classList.add("active");
+  document.querySelector(`[data-page="${name}"]`).classList.add("active");
+  window.scrollTo({top:0,behavior:"smooth"});
 }
 
-function safeNumber(value) {
-  const n = Number(value);
-  return Number.isFinite(n) ? n : 0;
+function setStatus(message,error=false){
+  $("status").textContent=message;
+  $("status").className=error?"status error":"status";
 }
 
-async function loadPlayer() {
-  const tag = $("tagInput").value.trim().replace(/^#/, "").toUpperCase();
+function safeNumber(value){
+  const n=Number(value);
+  return Number.isFinite(n)?n:0;
+}
 
-  if (!tag) {
-    setStatus("Введи тег игрока", true);
+function saveGoal(){
+  const value=safeNumber($("goalInput").value);
+  if(value<1){
+    alert("Укажи корректную цель");
     return;
   }
+  trophyGoal=value;
+  localStorage.setItem("brawlGoal",String(value));
+  $("goalInput").value="";
+  renderGoal();
+}
 
-  $("loadButton").disabled = true;
+function renderGoal(){
+  const current=safeNumber(player?.trophies);
+  const percent=trophyGoal>0?Math.min(100,current/trophyGoal*100):0;
+  const remaining=Math.max(0,trophyGoal-current);
+
+  $("goalValue").textContent=format(trophyGoal);
+  $("goalPercent").textContent=percent.toFixed(1)+"%";
+  $("goalFill").style.width=percent+"%";
+  $("goalCurrent").textContent=format(current)+" кубков";
+  $("goalRemaining").textContent=remaining>0
+    ?"Осталось "+format(remaining)
+    :"ЦЕЛЬ ДОСТИГНУТА!";
+
+  $("mile100").classList.toggle("done",current>=100000);
+  $("mile150").classList.toggle("done",current>=150000);
+  $("mile200").classList.toggle("done",current>=200000);
+}
+
+async function loadPlayer(){
+  const tag=$("tagInput").value.trim().replace(/^#/,"").toUpperCase();
+  if(!tag){setStatus("Введи тег игрока",true);return;}
+
+  $("loadButton").disabled=true;
   setStatus("Загружаю профиль...");
 
-  try {
-    const response = await fetch(API_URL + encodeURIComponent(tag), {
-      cache: "no-store"
-    });
+  try{
+    const response=await fetch(API_URL+encodeURIComponent(tag),{cache:"no-store"});
+    const data=await response.json();
 
-    const data = await response.json();
+    if(!response.ok)throw new Error(data.error||"Ошибка загрузки");
+    if(!Array.isArray(data.brawlers))throw new Error("API не вернул список бойцов");
 
-    if (!response.ok) {
-      throw new Error(data.error || "Ошибка загрузки профиля");
-    }
-
-    if (!Array.isArray(data.brawlers)) {
-      throw new Error("API не вернул список бойцов");
-    }
-
-    player = data;
-    brawlers = data.brawlers.map(b => ({
+    player=data;
+    brawlers=data.brawlers.map(b=>({
       ...b,
-      power: safeNumber(b.power),
-      trophies: safeNumber(b.trophies)
+      power:safeNumber(b.power),
+      trophies:safeNumber(b.trophies)
     }));
 
     renderProfile();
     renderBrawlers();
     calculateUpgrades();
-
-    $("profile").classList.remove("hidden");
-    $("brawlerSection").classList.remove("hidden");
-    $("upgradeSection").classList.remove("hidden");
-
-    setStatus("Профиль успешно загружен");
-  } catch (error) {
+    renderGoal();
+    setStatus("Профиль успешно обновлён");
+  }catch(error){
     console.error(error);
-    setStatus(error.message || "Не удалось загрузить профиль", true);
-  } finally {
-    $("loadButton").disabled = false;
+    setStatus(error.message||"Не удалось загрузить профиль",true);
+  }finally{
+    $("loadButton").disabled=false;
   }
 }
 
-function renderProfile() {
-  const counts = {
-    11: 0,
-    10: 0,
-    9: 0,
-    below: 0
-  };
+function renderProfile(){
+  const counts={11:0,10:0,9:0,below:0};
 
-  brawlers.forEach(b => {
-    if (b.power >= 11) counts[11]++;
-    else if (b.power === 10) counts[10]++;
-    else if (b.power === 9) counts[9]++;
+  brawlers.forEach(b=>{
+    if(b.power>=11)counts[11]++;
+    else if(b.power===10)counts[10]++;
+    else if(b.power===9)counts[9]++;
     else counts.below++;
   });
 
-  $("playerName").textContent = player.name || "Игрок";
-  $("playerTag").textContent = "#" + (player.tag || $("tagInput").value.replace(/^#/, ""));
-  $("trophies").textContent = safeNumber(player.trophies).toLocaleString("ru-RU");
+  $("playerName").textContent=player.name||"Brawl Stars Player";
+  $("playerTag").textContent="#"+(player.tag||$("tagInput").value.replace(/^#/,""));
+  $("trophies").textContent=format(player.trophies);
 
-  $("count11").textContent = counts[11];
-  $("count10").textContent = counts[10];
-  $("count9").textContent = counts[9];
-  $("countBelow9").textContent = counts.below;
-
-  $("totalBrawlers").textContent =
-    "Всего бойцов: " + brawlers.length +
-    " · Максимальная сила: " + counts[11];
+  $("count11").textContent=counts[11];
+  $("count10").textContent=counts[10];
+  $("count9").textContent=counts[9];
+  $("countBelow9").textContent=counts.below;
+  $("brawlerTotal").textContent=brawlers.length+" бойцов в коллекции";
 }
 
-function renderBrawlers() {
-  const search = $("brawlerSearch").value.trim().toLowerCase();
-  const power = $("powerFilter").value;
-  const sort = $("sortFilter").value;
+function escapeHTML(value){
+  return String(value).replace(/[&<>"']/g,c=>({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  })[c]);
+}
 
-  let list = [...brawlers];
+function renderBrawlers(){
+  const search=$("brawlerSearch").value.trim().toLowerCase();
+  const power=$("powerFilter").value;
+  const sort=$("sortFilter").value;
+  let list=[...brawlers];
 
-  if (search) {
-    list = list.filter(b => (b.name || "").toLowerCase().includes(search));
+  if(search)list=list.filter(b=>(b.name||"").toLowerCase().includes(search));
+  if(power==="below")list=list.filter(b=>b.power<9);
+  else if(power!=="all")list=list.filter(b=>b.power===Number(power));
+
+  if(sort==="power")list.sort((a,b)=>b.power-a.power||b.trophies-a.trophies);
+  if(sort==="trophies")list.sort((a,b)=>b.trophies-a.trophies);
+  if(sort==="name")list.sort((a,b)=>(a.name||"").localeCompare(b.name||""));
+
+  $("shownCount").textContent=list.length+" бойцов";
+
+  if(!list.length){
+    $("brawlers").innerHTML='<div class="empty">Ничего не найдено</div>';
+    return;
   }
 
-  if (power === "below") {
-    list = list.filter(b => b.power < 9);
-  } else if (power !== "all") {
-    list = list.filter(b => b.power === Number(power));
-  }
-
-  if (sort === "power") {
-    list.sort((a,b) => b.power - a.power || b.trophies - a.trophies);
-  } else if (sort === "trophies") {
-    list.sort((a,b) => b.trophies - a.trophies);
-  } else {
-    list.sort((a,b) => (a.name || "").localeCompare(b.name || ""));
-  }
-
-  $("shownCount").textContent = list.length + " бойцов";
-
-  $("brawlers").innerHTML = list.map(b => {
-    const image = `https://cdn.brawlify.com/brawlers/borderless/${b.id}.png`;
+  $("brawlers").innerHTML=list.map(b=>{
+    const image=`https://cdn.brawlify.com/brawlers/borderless/${b.id}.png`;
     return `
       <article class="brawler">
-        <img src="${image}" alt="${escapeHTML(b.name)}"
+        <img src="${image}" alt="${escapeHTML(b.name||"Боец")}"
              onerror="this.style.display='none'">
-        <div class="brawler-name">${escapeHTML(b.name || "Неизвестный боец")}</div>
+        <div class="brawler-name">${escapeHTML(b.name||"Неизвестный")}</div>
         <div class="brawler-info">
-          <span class="power">Сила ${b.power}</span>
-          <span>🏆 ${b.trophies}</span>
+          <span class="power">СИЛА ${b.power}</span>
+          <span>🏆 ${format(b.trophies)}</span>
         </div>
         <div class="brawler-info">
           <span>Ранг ${safeNumber(b.rank)}</span>
-          <span>${safeNumber(b.highestTrophies)} рекорд</span>
+          <span>Рекорд ${format(b.highestTrophies)}</span>
         </div>
-      </article>
-    `;
+      </article>`;
   }).join("");
 }
 
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, char => ({
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;",
-    "'":"&#039;"
-  })[char]);
-}
+function calculateUpgrades(){
+  let coins=0,points=0,notMaxed=0,maxed=0,currentPower=0;
+  const maxPower=brawlers.length*11;
 
-function calculateUpgrades() {
-  let coins = 0;
-  let points = 0;
-  let notMaxed = 0;
-  let currentPower = 0;
-  let maxPower = brawlers.length * 11;
+  brawlers.forEach(b=>{
+    const level=Math.max(1,Math.min(11,b.power));
+    currentPower+=level;
 
-  brawlers.forEach(b => {
-    const level = Math.max(1, Math.min(11, b.power));
+    if(level<11)notMaxed++;
+    else maxed++;
 
-    currentPower += level;
-
-    if (level < 11) notMaxed++;
-
-    for (let nextLevel = level + 1; nextLevel <= 11; nextLevel++) {
-      const cost = POWER_COSTS[nextLevel];
-      if (cost) {
-        coins += cost.coins;
-        points += cost.points;
-      }
+    for(let next=level+1;next<=11;next++){
+      const cost=POWER_COSTS[next];
+      if(cost){coins+=cost.coins;points+=cost.points;}
     }
   });
 
-  const progress = maxPower > 0
-    ? Math.round(currentPower / maxPower * 100)
-    : 0;
+  const progress=maxPower?Math.round(currentPower/maxPower*100):0;
 
-  $("coinsNeeded").textContent = coins.toLocaleString("ru-RU");
-  $("pointsNeeded").textContent = points.toLocaleString("ru-RU");
-  $("notMaxed").textContent = notMaxed;
-  $("powerProgress").textContent = progress + "%";
-  $("progressBar").style.width = progress + "%";
+  $("coinsNeeded").textContent=format(coins);
+  $("pointsNeeded").textContent=format(points);
+  $("notMaxed").textContent=notMaxed;
+  $("maxedCount").textContent=maxed;
+  $("powerProgress").textContent=progress+"%";
+  $("progressBar").style.width=progress+"%";
 }
 
-$("tagInput").addEventListener("keydown", event => {
-  if (event.key === "Enter") loadPlayer();
+$("tagInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter")loadPlayer();
 });
 
+renderGoal();
 loadPlayer();
 </script>
 </body>
